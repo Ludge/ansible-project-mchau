@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>My Webpage</title>
+    {% for item in hw_list %}
+    	{{ item.hostname }} <br/>
+    		{% for access in item.hw.sfl.access %} 
+    			{% if access == "html" %} 
+    			Lien HTML : 
+    				 <a href="http://{{ item.hostname }}.mtl.sfl">{{ item.hostname }}</a> <br/>
+       			{% endif %}
+       			{% if access == "ssh" %}
+       			Lien SSH : 
+       				ssh root@{{ item.hostname }}.mtl.sfl <br/>
+       			{% endif %}
+       			{% if access == "telnet"%}
+       			Lien Telnet : 
+       				telnet {{item.hostname}}.mtl.sfl <br/>
+       			{% endif %}
+    		{% endfor %}
+    {% endfor %}	
+
+</head>
+<body>
+</body>
+</html>

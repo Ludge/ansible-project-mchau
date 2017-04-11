@@ -1,0 +1,19 @@
+---
+- name: install nginx
+  apt: pkg=nginx state=installed
+  notify:
+    - Start Nginx
+    - Reload Nginx
+- name: Supprimer default.conf
+  file: path=/etc/nginx/sites-enabled/default state=absent
+  notify: 
+    - Reload Nginx
+
+- name: Creation du site 
+  template: src=template/nginx.j2 dest=/etc/nginx/sites-available/{{ domain }}
+
+- name: Activation du domain 
+  file: src=/etc/nginx/sites-available/{{ domain }} dest=/etc/nginx/sites-enabled/{{ domain }} state=link
+  notify: Reload Nginx
+
+- include: tasks/site.yml
