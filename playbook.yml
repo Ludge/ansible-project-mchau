@@ -1,18 +1,30 @@
 ---
 - hosts: all
   become: true
-  vars_files:
-    - roles/nginx/vars/main.yml   
-  vars: 
-    utils : 
+  vars:
+    utils :
       - vim
-    domain : test.local
+    domain : drupal-test
+    php:
+      - php5
+      - php5-gd
+      - php5-mysqlnd
+      - php5-json
+      - php5-curl
+#    drupal_version :
+#      - 8.3.0
 
-  roles: 
-    - name: utils 
-      tags : 
-        - utils 
+  roles:
+    - name: utils
+      tags :
+        - utils
 
-    - name: nginx 
-      tags: 
-        - nginx
+    - name: apache
+      tags:
+        - apache
+    - name: drupal
+      tags:
+        - drupal
+    - name: mysql
+      tags:
+        - mysql
