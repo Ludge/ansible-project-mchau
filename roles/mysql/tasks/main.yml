@@ -1,0 +1,14 @@
+---
+  - apt_repository:
+      repo: deb [arch=amd64,i386] http://mariadb.mirror.anstey.ca/repo/10.1/ubuntu trusty main
+      repo: deb-src http://mariadb.mirror.anstey.ca/repo/10.1/ubuntu trusty main
+      state: present
+      filename: 'mariadb'
+      update_cache: yes
+  - name:  Install mariadb-server
+    apt: pkg=mariadb-server state=installed
+  - name: Install mariadb-client
+    apt: pkg=mariadb-client state=installed
+  - name: Install python-Mysql
+    apt: pkg=python-mysqldb state=installed
+  - include: tasks/dbsetting.yml

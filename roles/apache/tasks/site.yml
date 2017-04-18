@@ -1,0 +1,15 @@
+---
+- name: Create directory
+  file: path=/var/www/{{ domain }} state=directory owner=www-data group=www-data
+- name: Insert allow redirect
+  blockinfile:
+    name: /etc/apache2/apache2.conf
+    insertafter: "<Directory /var/www/>
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+</Directory>"
+    block: |
+      <Directory /var/www/drupal-test>
+        AllowOverride ALL
+      </Directory>

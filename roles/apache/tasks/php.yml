@@ -1,0 +1,16 @@
+---
+  - name: Install php & Module
+    apt: pkg={{php}} state=present
+    notify: Reload apache
+  - name: Define Security PHP
+    replace:
+      name: /etc/php5/apache2/php.ini
+      regexp: '\allow_url_fopen = On'
+      replace: "allow_url_fopen = Off"
+      backup: yes
+    replace:
+      name: /etc/php5/apache2/php.ini
+      regexp: '\expose_php = On'
+      replace: "expose_php = Off"
+      backup: yes
+    notify: Reload apache

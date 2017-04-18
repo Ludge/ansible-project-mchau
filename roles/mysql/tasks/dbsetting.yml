@@ -1,0 +1,5 @@
+---
+  - name: "Create database"
+    mysql_db: name=drupal state=present
+  - name: "User Database"
+    mysql_user: user=drupal password=drupal priv=*.*:ALL state=present

@@ -1,0 +1,21 @@
+---
+- name: install apache
+  apt: pkg=apache2 state=installed update_cache=yes
+  notify:
+    - Start apache
+    - Reload apache
+- name: Configuration de rewrite module
+  apache2_module: name=rewrite state=present
+
+- name: Supprimer default.conf
+  file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
+
+- name: Creation du site
+  template: src=template/apache.j2 dest=/etc/apache2/sites-enabled/{{ domain }}.conf
+  notify:
+    - Reload apache
+- include: tasks/site.yml
+- include: tasks/php.yml
+#- name: Activation du domain
+#  file: src=/etc/nginx/sites-available/{{ domain }} dest=/etc/nginx/sites-enabled/{{ domain }} state=link
+#  notify: Reload Nginx
